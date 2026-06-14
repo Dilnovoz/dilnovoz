@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Photography — Dilnovoz Abdurazzakova</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  padding-bottom: 3.5rem;
+}
+.photo-cell {
+  aspect-ratio: 1/1;
+  overflow: hidden;
+  border-radius: 3px;
+  background: #E8ECF2;
+  cursor: zoom-in;
+}
+.photo-cell.tall {
+  grid-row: span 2;
+  aspect-ratio: unset;
+}
+.photo-cell img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease, opacity 0.2s;
+}
+.photo-cell:hover img { transform: scale(1.04); opacity: 0.92; }
+
+.lightbox {
+  display: none; position: fixed; inset: 0; z-index: 200;
+  background: rgba(27,35,50,0.92); cursor: pointer;
+  align-items: center; justify-content: center;
+  padding: 2rem;
+}
+.lightbox.open { display: flex; }
+.lightbox img { max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 3px; }
+.lightbox-close {
+  position: fixed; top: 1.25rem; right: 1.5rem;
+  font-size: 1.5rem; color: rgba(255,255,255,0.6);
+  cursor: pointer; line-height: 1;
+}
+@media (max-width: 680px) {
+  .photo-grid { grid-template-columns: repeat(2, 1fr); }
+  .photo-cell.tall { grid-row: span 1; aspect-ratio: 1/1; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Dilnovoz Abdurazzakova</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="research.html">Research</a></li>
+    <li><a href="cv.html">CV</a></li>
+    <li><a href="photography.html" class="active">Photography</a></li>
+  </ul>
+  <button class="nav-toggle" aria-label="Menu">&#9776;</button>
+</nav>
+
+<main class="site">
+
+  <div class="photo-header">
+    <h1>Photography</h1>
+    <p>Moments from travels and everyday life.</p>
+  </div>
+
+  <div class="divider" style="margin:0 0 1.5rem"></div>
+
+  <div class="photo-grid">
+    <!-- Row 1: tall Hallstatt + tulip + blossom tree -->
+    <div class="photo-cell tall"><img src="photos/p20.jpg" alt="Hallstatt, Austria"></div>
+    <div class="photo-cell"><img src="photos/p01.jpg" alt="Tulip"></div>
+    <div class="photo-cell"><img src="photos/p02.jpg" alt="Blossom tree"></div>
+
+    <!-- Row 2: (hallstatt continues) + goose + bridge -->
+    <div class="photo-cell"><img src="photos/p04.jpg" alt="Goose and goslings"></div>
+    <div class="photo-cell"><img src="photos/p05.jpg" alt="Bridge in spring"></div>
+
+    <!-- Row 3: camera sunset + tall tree path + flowers -->
+    <div class="photo-cell tall"><img src="photos/p18.jpg" alt="Tree-lined path"></div>
+    <div class="photo-cell"><img src="photos/p07.jpg" alt="Camera at sunset, Boston"></div>
+    <div class="photo-cell"><img src="photos/p06.jpg" alt="Street flowers"></div>
+
+    <!-- Row 4: (path continues) + Caffe Roma + Japanese garden -->
+    <div class="photo-cell"><img src="photos/p16.jpg" alt="Caffe Roma"></div>
+    <div class="photo-cell"><img src="photos/p17.jpg" alt="Japanese garden"></div>
+
+    <!-- Row 5: Albertina + tall pergola + blue bird -->
+    <div class="photo-cell"><img src="photos/p19.jpg" alt="Albertina, Vienna"></div>
+    <div class="photo-cell tall"><img src="photos/p09.jpg" alt="Pergola walkway"></div>
+    <div class="photo-cell"><img src="photos/p13.jpg" alt="Blue bird"></div>
+
+    <!-- Row 6: (pergola continues) + tamarin + sea lion -->
+    <div class="photo-cell"><img src="photos/p14.jpg" alt="Emperor tamarin"></div>
+    <div class="photo-cell"><img src="photos/p15.jpg" alt="Sea lion"></div>
+
+    <!-- Row 7: sunlight through trees + sailboat + bright flowers -->
+    <div class="photo-cell"><img src="photos/p10.jpg" alt="Sunlight through trees"></div>
+    <div class="photo-cell"><img src="photos/p11.jpg" alt="Sailboat at dusk"></div>
+    <div class="photo-cell"><img src="photos/p08.jpg" alt="Colourful flowers"></div>
+
+    <!-- Row 8: DC skyline + rhododendron + pink flowers -->
+    <div class="photo-cell"><img src="photos/p12.jpg" alt="Washington DC skyline at dusk"></div>
+    <div class="photo-cell"><img src="photos/p03.jpg" alt="Rhododendron bud"></div>
+    <div class="photo-cell"><img src="photos/p20.jpg" alt="Pink flowers"></div>
+  </div>
+
+</main>
+
+<div class="lightbox" id="lightbox">
+  <span class="lightbox-close" id="lightbox-close">&times;</span>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<footer>
+  <div class="site">
+    <div class="footer-inner">
+      <span class="footer-name">Dilnovoz Abdurazzakova</span>
+      <span>Research Fellow, J-PAL Europe &middot; Paris, France</span>
+      <a href="mailto:abdurazzakovad@gmail.com" class="footer-email">abdurazzakovad@gmail.com</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const lb = document.getElementById('lightbox');
+const lbImg = document.getElementById('lightbox-img');
+document.querySelectorAll('.photo-cell img').forEach(img => {
+  img.addEventListener('click', e => {
+    e.stopPropagation();
+    lbImg.src = img.src;
+    lbImg.alt = img.alt;
+    lb.classList.add('open');
+  });
+});
+lb.addEventListener('click', () => lb.classList.remove('open'));
+document.getElementById('lightbox-close').addEventListener('click', e => { e.stopPropagation(); lb.classList.remove('open'); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('open'); });
+</script>
+
+</body>
+</html>
